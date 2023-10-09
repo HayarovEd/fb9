@@ -110,7 +110,7 @@ class MainViewModel @Inject constructor(
         when (mainEvent) {
             MainEvent.EndGame -> pauseGame()
             MainEvent.StartGame -> startGame()
-            is MainEvent.getAnswer -> TODO()
+            is MainEvent.getAnswer -> getAnswer(mainEvent.chooseInt)
         }
     }
 
@@ -138,6 +138,7 @@ class MainViewModel @Inject constructor(
             }
             _state.value.copy(
                 gameStatus = GameStatus.Pause,
+                leftTime = 120,
             )
                 .updateStateUI()
 

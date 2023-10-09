@@ -17,7 +17,15 @@ fun SelectorStatus (
             LoadingScreen()
         }
         ApplicationStatus.Mock -> {
-
+            ContentGame(
+                gameStatus = state.value.gameStatus,
+                score = state.value.score,
+                bestScore = state.value.bestScore,
+                image = state.value.single,
+                alfa = state.value.alfa,
+                leftTime = state.value.leftTime,
+                onEvent = viewModel::onEvent
+            )
         }
         is ApplicationStatus.Succsess -> {
             WebScreen(
