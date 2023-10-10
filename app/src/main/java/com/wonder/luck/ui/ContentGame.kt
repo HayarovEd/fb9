@@ -20,11 +20,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ContentScale.Companion
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.wonder.luck.R
 import com.wonder.luck.data.egyptAlfa
 
 @Composable
@@ -45,6 +48,12 @@ fun ContentGame(
                     .fillMaxSize()
                     .padding(10.dp)
             ) {
+                Image(
+                    modifier = modifier
+                        .fillMaxSize(),
+                    painter = painterResource(id = R.drawable.kandinsky2),
+                    contentDescription = "",
+                    contentScale = ContentScale.FillBounds)
                 OutlinedButton(
                     modifier = modifier
                         .fillMaxWidth()
@@ -61,70 +70,83 @@ fun ContentGame(
         }
 
         GameStatus.Play -> {
-            Column(
+            Box(
                 modifier = modifier
                     .fillMaxSize()
                     .padding(10.dp)
             ) {
-                Row(
-                    modifier = modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Score: $score",
-                        color = Color.Red,
-                        fontSize = 14.sp
-                    )
-                    Text(
-                        text = "Best score: $bestScore",
-                        color = Color.Red,
-                        fontSize = 14.sp
-                    )
-                }
-                Spacer(modifier = modifier.height(10.dp))
-                Text(
-                    modifier = modifier.fillMaxWidth(),
-                    text = "Time left: $leftTime sec.",
-                    color = Color.Green,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = modifier.height(15.dp))
                 Image(
-                    modifier = modifier.fillMaxWidth(),
-                    painter = painterResource(id = image),
-                    contentDescription = "",
-                    //contentScale = ContentScale.FillWidth
-                )
-                Spacer(modifier = modifier.height(15.dp))
-                LazyVerticalGrid(
                     modifier = modifier
-                        .fillMaxWidth(),
-                    columns = GridCells.Fixed(6)
+                        .fillMaxSize(),
+                    painter = painterResource(id = R.drawable.kandinsky2),
+                    contentDescription = "",
+                    contentScale = ContentScale.FillBounds
+                )
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth()
                 ) {
-                    itemsIndexed(alfa) { index, imageAlfa ->
-                        Image(
-                            modifier = modifier.clickable {
-                               onEvent(MainEvent.getAnswer(index))
-                            },
-                            painter = painterResource(id = imageAlfa),
-                            contentDescription = "",
+                    Row(
+                        modifier = modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Score: $score",
+                            color = Color.Red,
+                            fontSize = 14.sp
+                        )
+                        Text(
+                            text = "Best score: $bestScore",
+                            color = Color.Red,
+                            fontSize = 14.sp
+                        )
+                    }
+                    Spacer(modifier = modifier.height(10.dp))
+                    Text(
+                        modifier = modifier.fillMaxWidth(),
+                        text = "Time left: $leftTime sec.",
+                        color = Color.Blue,
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = modifier.height(15.dp))
+                    Image(
+                        modifier = modifier.fillMaxWidth(),
+                        painter = painterResource(id = image),
+                        contentDescription = "",
+                        //contentScale = ContentScale.FillWidth
+                    )
+                    Spacer(modifier = modifier.height(15.dp))
+                    LazyVerticalGrid(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        columns = GridCells.Fixed(6)
+                    ) {
+                        itemsIndexed(alfa) { index, imageAlfa ->
+                            Image(
+                                modifier = modifier.clickable {
+                                    onEvent(MainEvent.getAnswer(index))
+                                },
+                                painter = painterResource(id = imageAlfa),
+                                contentDescription = "",
+                            )
+                        }
+                    }
+                    Spacer(modifier = modifier.height(25.dp))
+                    OutlinedButton(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        onClick = {
+                            onEvent(MainEvent.EndGame)
+                        }) {
+                        Text(
+                            text = "Complete game",
+                            fontSize = 20.sp
                         )
                     }
                 }
-                Spacer(modifier = modifier.height(25.dp))
-                OutlinedButton(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    onClick = {
-                        onEvent(MainEvent.EndGame)
-                    }) {
-                    Text(
-                        text = "Complete game",
-                        fontSize = 20.sp
-                    )
-                }
+
             }
         }
     }

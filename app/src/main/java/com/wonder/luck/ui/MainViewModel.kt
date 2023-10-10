@@ -54,8 +54,8 @@ class MainViewModel @Inject constructor(
             .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.fetchAndActivate()
-            .addOnCompleteListener { p0 ->
-                if (p0.isSuccessful) {
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     val isCheckedVpn = remoteConfig.getBoolean("to")
                     val resultUrl = remoteConfig.getString("url")
                     keeper.setSharedUrl(url = resultUrl)
